@@ -39,13 +39,13 @@ function populateMessages(response){
     response.data.forEach(item => {
         if(item.type === "status") {
             container.innerHTML += 
-            `<div class="container-msg">
+            `<div class="container-msg" data-test="message">
                 <h1>(${item.time})</h1>
                 <h2><strong>${item.from} </strong>${item.text}</h2>
             </div>`
         } else {
             container.innerHTML += 
-            `<div class="container-msg">
+            `<div class="container-msg" data-test="message">
                 <h1>(${item.time})</h1>
                 <h2><strong>${item.from} </strong>para <strong>${item.to}: </strong> ${item.text}</h2>
             </div>`
