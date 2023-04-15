@@ -57,6 +57,14 @@ body {
     margin-left: 8px;
 }
 
+.private {
+    background-color: #FFDEDE;
+}
+
+.status {
+    background-color: #DCDCDC;
+}
+
 .footer {
     width: 100%;
     height: 80px;
