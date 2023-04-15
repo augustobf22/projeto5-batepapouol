@@ -8,14 +8,11 @@ function getName() {
 }
 
 function clearInput() {
-    console.log("to aqui");
     let buttonText = document.querySelector('input');
-    buttonText.innerHTML = 'Escreva aqui...';
-    console.log(buttonText.innerHTML);
+    buttonText.value = '';
 }
 
 function buttonClick() {
-    console.log("entrei");
     //get input value
     let buttonText = document.querySelector('input').value;
     //msg = format as object
@@ -33,17 +30,27 @@ function buttonClick() {
     );
 
     promise.then(clearInput);
+    promise.catch(window.location.reload);
 }
 
 function populateMessages(response){
     container.innerHTML = ``;
 
-    response.data.forEach(item => 
-        container.innerHTML += 
-        `<div class="container-msg">
-            <h1>(${item.time})</h1>
-            <h2><strong>${item.from} </strong>para <strong>${item.to}: </strong> ${item.text}</h2>
-        </div>`)
+    response.data.forEach(item => {
+        if(item.type === "status") {
+            container.innerHTML += 
+            `<div class="container-msg">
+                <h1>(${item.time})</h1>
+                <h2><strong>${item.from} </strong>${item.text}</h2>
+            </div>`
+        } else {
+            container.innerHTML += 
+            `<div class="container-msg">
+                <h1>(${item.time})</h1>
+                <h2><strong>${item.from} </strong>para <strong>${item.to}: </strong> ${item.text}</h2>
+            </div>`
+        }
+    })
 
     //filter by type
     //each type has its own template
@@ -65,9 +72,6 @@ function keepConnected(userName) {
 }
 
 function enterSuccess(response) {
-    console.log(response.data);
-    console.log(response.status);
-
     setInterval(getMessages,3000);
     setInterval(keepConnected,5000,userName);
 
@@ -77,7 +81,6 @@ function enterSuccess(response) {
 }
 
 function enterError(response) {
-    console.log(response.data);
     alert("Nome em uso! Escolha outro.");
     const newName = getName();
     enterRoom(newName);
